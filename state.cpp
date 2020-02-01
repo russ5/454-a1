@@ -49,6 +49,17 @@ void State::updateState( float deltaT )
 {
   int i, j;
 
+  bool buildings[9];
+
+  for (i=0; i<9; i++) {
+    if (i == 0 || i == 4 || i == 8)
+      buildings[i] = silos[i/4].isIntact();
+    else if (i < 4)
+      buildings[i] = cities[i-1].isIntact();
+    else
+      buildings[i] = cities[i-2].isIntact();
+  }
+
   // Update the time
 
   currentTime += deltaT;
@@ -72,14 +83,14 @@ void State::updateState( float deltaT )
   // Look for terminating missiles
 
   for (i=0; i<missilesIn.size(); i++)
-    if (missilesIn[i].hasReachedDestination(true)) {
+    if (missilesIn[i].hasReachedDestination(true,buildings)) {
       explosions.add(Circle(vec3(missilesIn[i].position().x, missilesIn[i].position().y, 0), 0.5, 0.05, vec3(1.0, 1.0, 0)));
       missilesIn.remove(i);
       i--;
     }
 
   for (i=0; i<missilesOut.size(); i++)
-    if (missilesOut[i].hasReachedDestination(false)) {
+    if (missilesOut[i].hasReachedDestination(false,buildings)) {
       explosions.add(Circle(vec3(missilesOut[i].position().x, missilesOut[i].position().y, 0), 0.5, 0.07, vec3(0, 1.0, 1.0)));
       missilesOut.remove(i);
       i--;
@@ -94,10 +105,10 @@ void State::updateState( float deltaT )
     }
     if (explosions[i].radius() >= explosions[i].maxRadius()) {
       for (j=0; j<cities.size(); j++)
-        if (cities[j].isHit(explosions[i].position)
+        if (cities[j].isHit(explosions[i].position))
           cities[j].destroy();
       for (j=0; j<silos.size(); j++)
-        if (silos[j].isHit(explosions[i].position)
+        if (silos[j].isHit(explosions[i].position))
           silos[j].destroy();
       explosions.remove(i);
       i--;
