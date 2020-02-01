@@ -93,14 +93,16 @@ void State::updateState( float deltaT )
         missilesIn.remove(j);
     }
     if (explosions[i].radius() >= explosions[i].maxRadius()) {
-      // CHANGE THIS: CHECK FOR DESTROYED CITY OR SILO
+      for (j=0; j<cities.size(); j++)
+        if (cities[j].isHit(explosions[i].position)
+          cities[j].destroy();
+      for (j=0; j<silos.size(); j++)
+        if (silos[j].isHit(explosions[i].position)
+          silos[j].destroy();
       explosions.remove(i);
       i--;
     }
   }
-
-  // Look for incoming missiles that hit an explosion and are
-  // destroyed
 
   // ADD CODE HERE
 
