@@ -33,6 +33,11 @@ class Silo : public Building {
     return pos;
   }
 
+  int rounds() {
+    return roundsLeft;
+  }
+
+
   // Draw the silo
 
   void draw( GPUProgram *gpuProgram ) {
