@@ -58,10 +58,13 @@ void State::updateState( float deltaT )
   //
   // CHANGE THIS
 
-  if (randIn01() > 0.99) {	// New missile 
+  if (randIn01() > 0.99) {	// New missile
 
-    missilesIn.add( Missile( vec3( 0.5, worldTop, 0), // source
-			     vec3( -0.02, -0.1, 0 ),         // velocity
+    float xDest = randIn01();
+    float xSrc = randIn01();
+
+    missilesIn.add( Missile( vec3( xSrc, worldTop, 0), // source
+			     vec3( (xDest - xSrc)*0.1, -0.1, 0 ),         // velocity
 			     0,                              // destination y
 			     vec3( 1,1,0 ) ) );              // colour
   }
