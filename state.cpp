@@ -58,7 +58,7 @@ void State::updateState( float deltaT )
   //
   // CHANGE THIS
 
-  if (randIn01() > 0.2) {	// New missile
+  if (randIn01() > 0.999) {	// New missile
 
     float xDest = randIn01();
     float xSrc = randIn01();
