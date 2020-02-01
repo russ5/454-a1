@@ -68,7 +68,7 @@ class Silo : public Building {
   }
 
   bool isHit( vec3 explosionPos ) {
-    return explosionPos.y<0.05 && (explosionPos.x > (pos.x - 0.025) && explosionPos.x < (pos.x + 0.025));
+    return explosionPos.y<0.05 && (explosionPos.x > (pos.x - 0.04) && explosionPos.x < (pos.x + 0.04));
   }
 
  private:
