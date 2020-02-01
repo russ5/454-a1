@@ -21,7 +21,7 @@ class City : public Building {
     intact = true;
   }
 
-  bool intact() {
+  bool isIntact() {
     return intact;
   }
 

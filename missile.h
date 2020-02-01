@@ -6,6 +6,7 @@
 
 
 #include "headers.h"
+#include "state.h"
 #include "gpuProgram.h"
 
 
@@ -54,15 +55,15 @@ class Missile {
     return (pos1.x > 1 || pos1.y > 1 || pos1.x < 0 || pos1.y < 0 ||  // hit edges of world
 			(abs(pos1.y - destY) < 0.01) ||  // missile is at destination (within 1%)
 			(incoming&&(pos1.y<0.04)&&(
-            ((pos1.x>0.075||pos1.x<0.125)&&silos[0].intact())||
-            ((pos1.x>0.175||pos1.x<0.225)&&cities[0].intact())||
-            ((pos1.x>0.275||pos1.x<0.325)&&cities[1].intact())||
-            ((pos1.x>0.375||pos1.x<0.425)&&cities[2].intact())||
-            ((pos1.x>0.475||pos1.x<0.525)&&silos[1].intact())||
-            ((pos1.x>0.575||pos1.x<0.625)&&cities[3].intact())||
-            ((pos1.x>0.675||pos1.x<0.725)&&cities[4].intact())||
-            ((pos1.x>0.775||pos1.x<0.825)&&cities[5].intact())||
-            ((pos1.x>0.875||pos1.x<0.925)&&silos[2].intact())))  // missile at city or silo
+            ((pos1.x>0.075||pos1.x<0.125)&&silos[0].isIntact())||
+            ((pos1.x>0.175||pos1.x<0.225)&&cities[0].isIntact())||
+            ((pos1.x>0.275||pos1.x<0.325)&&cities[1].isIntact())||
+            ((pos1.x>0.375||pos1.x<0.425)&&cities[2].isIntact())||
+            ((pos1.x>0.475||pos1.x<0.525)&&silos[1].isIntact())||
+            ((pos1.x>0.575||pos1.x<0.625)&&cities[3].isIntact())||
+            ((pos1.x>0.675||pos1.x<0.725)&&cities[4].isIntact())||
+            ((pos1.x>0.775||pos1.x<0.825)&&cities[5].isIntact())||
+            ((pos1.x>0.875||pos1.x<0.925)&&silos[2].isIntact())))  // missile at city or silo
     );
   }
 

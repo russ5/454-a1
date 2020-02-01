@@ -26,7 +26,7 @@ class Silo : public Building {
     return (roundsLeft > 0 && intact);
   }
 
-  bool intact() {
+  bool isIntact() {
     return intact;
   }
 
