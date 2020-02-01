@@ -28,8 +28,25 @@ class Missile {
 
   void draw( GPUProgram *gpuProgram) {
 
+    const float dimmer = 0.5;
+    const float dimmest = 0.25;
+
     vec3 verts[2] = {
-      vec3( pos0.x, pos0.y, 0 ),
+      vec3((pos1.x-pos0.x)*0.5, (pos1.y-pos0.y)*0.5, 0 ),
+      vec3( pos1.x, pos1.y, 0 )
+    };
+
+    gpuProgram->drawVertices( &verts[0], 2, GL_LINES, dimmest * colour );
+
+    vec3 verts[2] = {
+      vec3( (pos1.x-pos0.x)*0.3, (pos1.y-pos0.y)*0.3, 0 ),
+      vec3( pos1.x, pos1.y, 0 )
+    };
+
+    gpuProgram->drawVertices( &verts[0], 2, GL_LINES, dimmer * colour );
+
+    vec3 verts[2] = {
+      vec3( (pos1.x-pos0.x)*0.1, (pos1.y-pos0.y)*0.1, 0 ),
       vec3( pos1.x, pos1.y, 0 )
     };
 
