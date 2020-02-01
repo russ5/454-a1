@@ -60,7 +60,7 @@ void State::updateState( float deltaT )
 
   if (randIn01() > 0.99) {	// New missile 
 
-    missilesIn.add( Missile( vec3( randIn01(), worldTop, 0), // source
+    missilesIn.add( Missile( vec3( 0.5, worldTop, 0), // source
 			     vec3( -0.02, -0.1, 0 ),         // velocity
 			     0,                              // destination y
 			     vec3( 1,1,0 ) ) );              // colour
@@ -122,10 +122,10 @@ void State::fireMissile( int siloIndex, float x, float y )
 
     // CHANGE THIS
 
-    missilesOut.add( Missile( silos[siloIndex].position(),           // source
-			      speed * vec3(randIn01(),randIn01(),0), // velocity
-			      y,		                     // destination y
-			      vec3( 0,1,1 ) ) );                     // colour
+    missilesOut.add( Missile( silos[siloIndex].position(),  // source
+			      speed * vec3(x-silos[siloIndex].position().x,y-silos[siloIndex].position().y,0),  // velocity
+			      y,  // destination y
+			      vec3( 0,1,1 ) ) );  // colour
   }
 }
 
