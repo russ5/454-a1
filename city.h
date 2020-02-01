@@ -17,12 +17,22 @@ class City : public Building {
 
   City() {}
 
-  City( vec3 pos ) : Building( pos ) {}
+  City( vec3 pos ) : Building( pos ) {
+    intact = true;
+  }
+
+  bool intact() {
+    return intact;
+  }
+
+  void destroy() {
+    intact = false;
+  }
 
   // Draw the city
 
   void draw( GPUProgram *gpuProgram ) {
-
+    if (!intact) return;
     vec3 verts[4] = {
       vec3( pos.x + .04, pos.y,       0 ),
       vec3( pos.x + .04, pos.y + .03, 0 ),
@@ -33,7 +43,12 @@ class City : public Building {
     gpuProgram->drawVertices( &verts[0], 4, GL_LINE_LOOP, vec3(1,1,1) );
   }
 
-  bool isHit( vec3 missilePos, float radius ); 
+  bool isHit( vec3 explosionPos ) {
+      return explosionPos.y<0.05 && (explosionPos.x > (pos.x - 0.025) && explosionPos.x < (pos.x + 0.025));
+  }
+
+  private:
+    bool intact;
 };
   
 

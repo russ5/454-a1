@@ -19,10 +19,19 @@ class Silo : public Building {
   Silo( vec3 pos ) : Building( pos ) {
 
     roundsLeft = 15;
+    intact = true;
   }
 
   bool canShoot() {
-    return (roundsLeft > 0);
+    return (roundsLeft > 0 && intact);
+  }
+
+  bool intact() {
+    return intact;
+  }
+
+  void destroy() {
+    intact = false;
   }
 
   void decrMissiles() {
@@ -41,7 +50,7 @@ class Silo : public Building {
   // Draw the silo
 
   void draw( GPUProgram *gpuProgram ) {
-
+    if (!intact) return;
     const int NUM_SEGMENTS = 45; // number of pieces of hemisphere perimeter
 
     vec3 *verts = new vec3[NUM_SEGMENTS+1];
@@ -58,9 +67,14 @@ class Silo : public Building {
     delete [] verts;
   }
 
+  bool isHit( vec3 explosionPos ) {
+    return explosionPos.y<0.05 && (explosionPos.x > (pos.x - 0.025) && explosionPos.x < (pos.x + 0.025));
+  }
+
  private:
 
   int roundsLeft;
+  bool intact;
 };
   
 
