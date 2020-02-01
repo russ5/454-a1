@@ -35,13 +35,13 @@ class Circle {
     vec3 *verts = new vec3[NUM_SEGMENTS+1];
 
     verts[0] = pos;
-    
+
     for (int i=0; i<NUM_SEGMENTS; i++) {
       float theta = (i/(float)(NUM_SEGMENTS-1)) * (2*M_PI);
-      verts[i+1] = vec3( pos.x + (r/3) * sin(theta), pos.y + (r/3) * cos(theta), 0 );
+      verts[i+1] = vec3( pos.x + r * sin(theta), pos.y + r * cos(theta), 0 );
     }
 
-    gpuProgram->drawVertices( verts, NUM_SEGMENTS, GL_TRIANGLE_FAN, colour );
+    gpuProgram->drawVertices( verts, NUM_SEGMENTS, GL_TRIANGLE_FAN, dimmest * colour );
 
     verts[0] = pos;
 
@@ -56,10 +56,10 @@ class Circle {
 
     for (int i=0; i<NUM_SEGMENTS; i++) {
       float theta = (i/(float)(NUM_SEGMENTS-1)) * (2*M_PI);
-      verts[i+1] = vec3( pos.x + r * sin(theta), pos.y + r * cos(theta), 0 );
+      verts[i+1] = vec3( pos.x + (r/3) * sin(theta), pos.y + (r/3) * cos(theta), 0 );
     }
 
-    gpuProgram->drawVertices( verts, NUM_SEGMENTS, GL_TRIANGLE_FAN, dimmest * colour );
+    gpuProgram->drawVertices( verts, NUM_SEGMENTS, GL_TRIANGLE_FAN, colour );
 
     delete [] verts;
   }
