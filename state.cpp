@@ -47,7 +47,7 @@ void State::draw()
 void State::updateState( float deltaT )
 
 {
-  int i;
+  int i, j;
 
   // Update the time
 
@@ -72,27 +72,32 @@ void State::updateState( float deltaT )
   // Look for terminating missiles
 
   for (i=0; i<missilesIn.size(); i++)
-    if (missilesIn[i].hasReachedDestination()) {
-      // CHANGE THIS: ADD AN EXPLOSION
+    if (missilesIn[i].hasReachedDestination(true)) {
+      explosions.add(Circle(vec3(missilesIn[i].position().x, missilesIn[i].position().y, 0), 0.5, 0.05, vec3(1.0, 1.0, 0)));
       missilesIn.remove(i);
       i--;
     }
 
   for (i=0; i<missilesOut.size(); i++)
-    if (missilesOut[i].hasReachedDestination()) {
-      // CHANGE THIS: ADD AN EXPLOSION
+    if (missilesOut[i].hasReachedDestination(false)) {
+      explosions.add(Circle(vec3(missilesOut[i].position().x, missilesOut[i].position().y, 0), 0.5, 0.07, vec3(0, 1.0, 1.0)));
       missilesOut.remove(i);
       i--;
     }
 
   // Look for terminating explosions
 
-  for (i=0; i<explosions.size(); i++)
+  for (i=0; i<explosions.size(); i++) {
+    for (j=0; j<missilesIn.size(); j++) {  
+      if (sqrt((explosions[i].position()-missilesIn[j].position()).squaredLength()) < explosions[i].maxRadius())
+        missilesIn.remove(j);
+    }
     if (explosions[i].radius() >= explosions[i].maxRadius()) {
       // CHANGE THIS: CHECK FOR DESTROYED CITY OR SILO
       explosions.remove(i);
       i--;
     }
+  }
 
   // Look for incoming missiles that hit an explosion and are
   // destroyed
@@ -126,7 +131,7 @@ void State::fireMissile( int siloIndex, float x, float y )
     // CHANGE THIS
 
     missilesOut.add( Missile( silos[siloIndex].position(),  // source
-			      speed * vec3(x-silos[siloIndex].position().x,(1-y)-silos[siloIndex].position().y,0),  // velocity
+			      speed * vec3(x-silos[siloIndex].position().x,y-silos[siloIndex].position().y,0).normalize(),  // velocity
 			      y,  // destination y
 			      vec3( 0,1,1 ) ) );  // colour
   }

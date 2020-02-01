@@ -50,11 +50,15 @@ class Missile {
 
   // Has the missile reached its destination?
 
-  bool hasReachedDestination() {
+  bool hasReachedDestination(bool incoming) {
     return (pos1.x > 1 || pos1.y > 1 || pos1.x < 0 || pos1.y < 0 ||  // hit edges of world
-			(abs(pos1.y - destY) < 0.01) || // missile is at destination (within 1%)
-			((pos1.x>0.075||pos1.x<0.155)&&(pos1.y>0.905))
-);
+			(abs(pos1.y - destY) < 0.01) ||  // missile is at destination (within 1%)
+			(incoming&&(pos1.y<0.04)&&((pos1.x>0.075||pos1.x<0.125)||(pos1.x>0.175||pos1.x<0.225)||
+			(pos1.x>0.275||pos1.x<0.325)||(pos1.x>0.375||pos1.x<0.425)||
+			(pos1.x>0.475||pos1.x<0.525)||(pos1.x>0.575||pos1.x<0.625)||
+			(pos1.x>0.675||pos1.x<0.725)||(pos1.x>0.775||pos1.x<0.825)||
+			(pos1.x>0.875||pos1.x<0.925)))  // missile at city or silo
+    );
   }
 
  private:
